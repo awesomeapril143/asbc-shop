@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free OSHA Risk Self-Audit for Small Business — 10 Question Compliance Check | April Lewis</title>
+<meta name="description" content="Free 10-question OSHA risk self-audit for small businesses. Flags the most common violations and gives you a personalized risk report with the gaps to close first.">
+<meta name="keywords" content="OSHA self audit, OSHA compliance check, small business OSHA, free OSHA audit, OSHA risk assessment, workplace safety audit">
+<link rel="canonical" href="https://awesomeapril143.github.io/asbc-shop/tools/osha-risk-audit.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Free OSHA Risk Self-Audit for Small Business">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"OSHA Risk Self-Audit","applicationCategory":"BusinessApplication","operatingSystem":"Any","description":"Free OSHA compliance risk self-audit for small businesses.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header"><div class="site-header-inner"><div class="brand"><a href="../index.html">A.S. Business Consulting Shop<small>Workbooks &amp; tools by April Lewis</small></a></div><nav class="nav"><a href="../index.html#products">Workbooks</a><a href="../tools/">Free Tools</a><a href="../blog/">Blog</a></nav></div></header>
+
+<main class="container narrow">
+  <p style="color:var(--magenta);font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Free Tool · 7 minutes · No signup</p>
+  <h2 style="font-size:36px">OSHA Risk Self-Audit</h2>
+  <p style="font-size:18px;color:var(--gray);margin-bottom:32px">Answer 10 yes/no questions. Get a personalized OSHA risk report — including the gaps OSHA is most likely to fine you for. Authored by an OSHA-certified consultant.</p>
+
+  <div class="tool-progress"><div class="tool-progress-bar" id="progress" style="width:0%"></div></div>
+  <div id="quiz"></div>
+
+  <div class="tool-result" id="result">
+    <h3 id="result-title"></h3>
+    <p id="result-summary"></p>
+    <div id="result-detail" style="margin-top:16px"></div>
+    <div class="cta-box" style="margin-top:24px">
+      <h3>Close the gaps with the OSHA Compliance Checklist Workbook.</h3>
+      <p>Authored by April Lewis, OSHA Certified. Walks you through every required posting, training log, recordkeeping form (OSHA 300/300A/301), HazCom audit, PPE assessment, and Emergency Action Plan. $9.99 instant download.</p>
+      <a class="product-cta" href="../products/osha-compliance-checklist.html">Get the OSHA Workbook &rarr;</a>
+    </div>
+    <div style="margin-top:18px"><button class="btn btn-secondary" onclick="restart()">Restart audit</button></div>
+  </div>
+
+  <div style="margin-top:48px;padding-top:24px;border-top:1px solid var(--border);font-size:14px;color:var(--gray)">
+    <strong>Disclaimer.</strong> Educational tool, not legal advice. For interpretation of specific OSHA standards as applied to your workplace, consult an OSHA-certified compliance officer or attorney.
+  </div>
+</main>
+
+<footer class="site-footer"><div class="site-footer-inner"><div><h5>Contact</h5><a href="mailto:april@choosesuccessnow.com">april@choosesuccessnow.com</a><a href="tel:5125894053">512-589-4053</a></div><div class="copyright">&copy; 2026 A.S. Business Consulting LLC</div></div></footer>
+
+<script>
+const audit = [
+  { q: "Are all current OSHA-required postings displayed in a visible employee area, in the language(s) of your workforce?", risk: "high", fail: "Missing or out-of-date required postings — among the most cited OSHA violations for small businesses." },
+  { q: "Do you have a written Emergency Action Plan (required if you have 11+ employees)?", risk: "high", fail: "Missing Emergency Action Plan — required for most workplaces with 11+ employees." },
+  { q: "Do you maintain a Hazard Communication (HazCom) program with current Safety Data Sheets (SDS) for all chemicals on site?", risk: "high", fail: "HazCom gap — among the top 5 OSHA violations every year." },
+  { q: "Have you done a written PPE Hazard Assessment by job function and documented PPE training for affected employees?", risk: "high", fail: "Missing PPE hazard assessment or training documentation." },
+  { q: "Do you keep OSHA recordkeeping forms (OSHA 300, 300A, 301) up to date and post the 300A annually February 1–April 30?", risk: "medium", fail: "OSHA recordkeeping gap — required for most employers with 11+ employees." },
+  { q: "Do you have a documented training log with date, topic, trainer, attendees, and signatures for every required training?", risk: "high", fail: "Untracked or undocumented training is treated as untrained by OSHA." },
+  { q: "Are walking-working surfaces, exits, and aisles kept clear and clearly marked?", risk: "medium", fail: "Walking/working surface and exit-marking violations — frequent inspection findings." },
+  { q: "Are electrical panels accessible (36 inches of clear space) and not blocked by storage or equipment?", risk: "medium", fail: "Blocked electrical panels are a common general-duty clause violation." },
+  { q: "If you handle blood, sharps, or first-aid in your workplace, do you have a written Bloodborne Pathogens program?", risk: "medium", fail: "BBP program required if employees can reasonably be exposed to blood." },
+  { q: "Have you run a self-inspection in the last 12 months and documented findings + corrective actions?", risk: "medium", fail: "No documented self-inspection means no proof of due diligence." }
+];
+let answers = [];
+let idx = 0;
+
+function render() {
+  const quiz = document.getElementById('quiz');
+  const progress = document.getElementById('progress');
+  if (idx >= audit.length) {
+    document.getElementById('result').classList.add('show');
+    quiz.innerHTML = '';
+    progress.style.width = '100%';
+    score();
+    window.scrollTo({ top: document.getElementById('result').offsetTop - 80, behavior: 'smooth' });
+    return;
+  }
+  progress.style.width = ((idx / audit.length) * 100) + '%';
+  const item = audit[idx];
+  quiz.innerHTML = `
+    <div class="tool-card">
+      <p style="color:var(--magenta);font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Question ${idx + 1} of ${audit.length}</p>
+      <p class="tool-question">${item.q}</p>
+      <div class="tool-options">
+        <button class="tool-option" onclick="answer('yes')">Yes — we have this in place</button>
+        <button class="tool-option" onclick="answer('no')">No / not sure</button>
+        <button class="tool-option" onclick="answer('na')">Not applicable to my industry</button>
+      </div>
+    </div>`;
+}
+
+function answer(val) {
+  answers[idx] = val;
+  idx++;
+  render();
+}
+
+function restart() {
+  answers = []; idx = 0;
+  document.getElementById('result').classList.remove('show');
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function score() {
+  const failed = [];
+  let highRiskFails = 0, mediumRiskFails = 0;
+  audit.forEach((a, i) => {
+    if (answers[i] === 'no') {
+      failed.push(a.fail);
+      if (a.risk === 'high') highRiskFails++;
+      else mediumRiskFails++;
+    }
+  });
+
+  let title, summary, detail;
+  if (failed.length === 0) {
+    title = "🟢 Low risk — strong compliance position.";
+    summary = "Based on your answers, your business has the major OSHA programs in place. Maintain documentation cadence and run another self-audit within 12 months.";
+    detail = "<strong>Recommendation:</strong> Use the OSHA Compliance Checklist workbook as a quarterly maintenance tool — required postings, training log, HazCom, recordkeeping all live there in one place.";
+  } else if (highRiskFails >= 3 || failed.length >= 6) {
+    title = "🔴 High risk — multiple major gaps.";
+    summary = "Your audit flagged " + failed.length + " gap" + (failed.length === 1 ? "" : "s") + ", including " + highRiskFails + " in the highest-risk OSHA categories. If OSHA inspected you tomorrow, you're likely looking at multi-violation citations.";
+    detail = "<strong>Gaps flagged:</strong><ul>" + failed.map(f => "<li>" + f + "</li>").join('') + "</ul><br><strong>Action:</strong> Close the highest-risk items first — required postings, Emergency Action Plan, HazCom, and training log are usually the cheapest fixes for the biggest exposure.";
+  } else if (highRiskFails >= 1 || failed.length >= 3) {
+    title = "🟡 Medium risk — close gaps before they become citations.";
+    summary = "Your audit flagged " + failed.length + " gap" + (failed.length === 1 ? "" : "s") + ", including " + highRiskFails + " high-risk item" + (highRiskFails === 1 ? "" : "s") + ". Most are fixable in days, not months.";
+    detail = "<strong>Gaps flagged:</strong><ul>" + failed.map(f => "<li>" + f + "</li>").join('') + "</ul>";
+  } else {
+    title = "🟡 Medium-low risk — a couple of gaps to close.";
+    summary = "Your audit flagged " + failed.length + " gap" + (failed.length === 1 ? "" : "s") + " in lower-risk categories. Close them at your next compliance review.";
+    detail = "<strong>Gaps flagged:</strong><ul>" + failed.map(f => "<li>" + f + "</li>").join('') + "</ul>";
+  }
+
+  document.getElementById('result-title').textContent = title;
+  document.getElementById('result-summary').textContent = summary;
+  document.getElementById('result-detail').innerHTML = detail;
+}
+
+render();
+</script>
+
+</body>
+</html>

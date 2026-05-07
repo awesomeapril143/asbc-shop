@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free WOSB / EDWOSB Eligibility Checker — Do You Qualify for SBA Certification? | April Lewis</title>
+<meta name="description" content="Free 5-minute quiz: do you qualify for SBA Women-Owned Small Business (WOSB) or Economically-Disadvantaged WOSB (EDWOSB) certification? Get a personalized eligibility report.">
+<meta name="keywords" content="WOSB eligibility, EDWOSB eligibility, SBA certification quiz, women owned small business, am I WOSB eligible, federal contracts for women">
+<link rel="canonical" href="https://awesomeapril143.github.io/asbc-shop/tools/wosb-eligibility-checker.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Free WOSB / EDWOSB Eligibility Checker">
+<meta property="og:description" content="5-minute quiz: do you qualify for SBA Women-Owned Small Business certification?">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "WOSB / EDWOSB Eligibility Checker",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "description": "Free interactive eligibility checker for SBA Women-Owned Small Business and Economically-Disadvantaged WOSB certification.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header"><div class="site-header-inner"><div class="brand"><a href="../index.html">A.S. Business Consulting Shop<small>Workbooks &amp; tools by April Lewis</small></a></div><nav class="nav"><a href="../index.html#products">Workbooks</a><a href="../tools/">Free Tools</a><a href="../blog/">Blog</a></nav></div></header>
+
+<main class="container narrow">
+  <p style="color:var(--magenta);font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Free Tool · 5 minutes · No signup</p>
+  <h2 style="font-size:36px">WOSB / EDWOSB Eligibility Checker</h2>
+  <p style="font-size:18px;color:var(--gray);margin-bottom:32px">Find out in 5 minutes whether your business qualifies for SBA Women-Owned Small Business (WOSB) or Economically-Disadvantaged WOSB (EDWOSB) certification — and what to fix if you don't qualify yet.</p>
+
+  <div class="tool-progress"><div class="tool-progress-bar" id="progress" style="width:0%"></div></div>
+  <div id="quiz"></div>
+
+  <div class="tool-result" id="result">
+    <h3 id="result-title"></h3>
+    <p id="result-summary"></p>
+    <div id="result-detail" style="margin-top:16px"></div>
+    <div class="cta-box" style="margin-top:24px">
+      <h3 id="cta-title"></h3>
+      <p id="cta-body"></p>
+      <a class="product-cta" id="cta-link" href="../products/wosb-certification-guide.html">Get the WOSB Certification Guide &rarr;</a>
+      <a class="product-cta-secondary" href="../products/gov-contracting-starter-kit.html">Or the full Government Contracting Kit</a>
+    </div>
+    <div style="margin-top:18px"><button class="btn btn-secondary" onclick="restart()">Restart quiz</button></div>
+  </div>
+
+  <div style="margin-top:48px;padding-top:24px;border-top:1px solid var(--border);font-size:14px;color:var(--gray)">
+    <strong>Disclaimer.</strong> This tool is an educational pre-screen, not a guarantee of certification. Final eligibility is determined by the U.S. Small Business Administration via the certify.sba.gov portal. SBA rules change; verify current requirements at <a href="https://certify.sba.gov" rel="noopener">certify.sba.gov</a>.
+  </div>
+</main>
+
+<footer class="site-footer"><div class="site-footer-inner"><div><h5>Contact</h5><a href="mailto:april@choosesuccessnow.com">april@choosesuccessnow.com</a><a href="tel:5125894053">512-589-4053</a></div><div class="copyright">&copy; 2026 A.S. Business Consulting LLC</div></div></footer>
+
+<script>
+const questions = [
+  { q: "Is your business a for-profit small business under SBA size standards for your primary NAICS?", help: "If you're under ~$8M–$45M revenue depending on industry, you're likely a small business. Most consultants, service providers, and small product companies qualify.", opts: ["Yes", "No / not sure"] },
+  { q: "Is at least 51% of your business directly and unconditionally owned by one or more women who are U.S. citizens?", help: "Direct ownership means ownership of the operating company itself (not through a holding company unless properly structured). Unconditional means no time-limits, no contingent transfer rights.", opts: ["Yes — 51%+ owned by women, U.S. citizens, unconditional", "Partially / through a holding entity / non-citizen owner", "No"] },
+  { q: "Do one or more of those women hold the highest officer position (e.g., CEO, President, Managing Member) AND manage the business day-to-day?", help: "SBA requires that woman/women run daily operations and hold the highest position. You can have male partners, but the woman owner(s) must be the ones in charge of the company.", opts: ["Yes — woman owner is highest officer AND manages daily operations", "Woman is highest officer but does NOT manage daily operations", "No"] },
+  { q: "Do woman/women have the right to make all long-term decisions and decisions about day-to-day operations of the business?", help: "Voting rights, authority to bind the company, and final decision-making must rest with the woman owner(s). Conditioned voting rights or required co-signatures from male family members can disqualify.", opts: ["Yes — full unconditional control", "Some conditions/co-signatures required", "No"] },
+  { q: "Is your Personal Net Worth (excluding primary home, primary business equity, retirement accounts) less than $850,000?", help: "EDWOSB-only requirement. Plain WOSB has no PNW cap — only EDWOSB does.", opts: ["Yes — under $850K", "No — over $850K", "Not sure"] },
+  { q: "Is your adjusted gross income averaged over the last 3 years less than $400,000?", help: "EDWOSB-only requirement.", opts: ["Yes — under $400K", "No — over $400K", "Not sure"] },
+  { q: "Do you have an active SAM.gov registration with a UEI?", help: "SAM.gov registration with a UEI (Unique Entity Identifier) is a prerequisite to apply for WOSB/EDWOSB.", opts: ["Yes — active SAM.gov + UEI", "No — need to register", "Started but not complete"] }
+];
+let answers = [];
+let idx = 0;
+
+function render() {
+  const quiz = document.getElementById('quiz');
+  const progress = document.getElementById('progress');
+  if (idx >= questions.length) {
+    document.getElementById('result').classList.add('show');
+    quiz.innerHTML = '';
+    progress.style.width = '100%';
+    score();
+    window.scrollTo({ top: document.getElementById('result').offsetTop - 80, behavior: 'smooth' });
+    return;
+  }
+  progress.style.width = ((idx / questions.length) * 100) + '%';
+  const q = questions[idx];
+  quiz.innerHTML = `
+    <div class="tool-card">
+      <p style="color:var(--magenta);font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Question ${idx + 1} of ${questions.length}</p>
+      <p class="tool-question">${q.q}</p>
+      <p style="color:var(--gray);font-size:14px;margin-bottom:16px">${q.help}</p>
+      <div class="tool-options">${q.opts.map((o, i) => `<button class="tool-option" onclick="answer(${i})">${o}</button>`).join('')}</div>
+    </div>`;
+}
+
+function answer(choice) {
+  answers[idx] = choice;
+  idx++;
+  render();
+}
+
+function restart() {
+  answers = []; idx = 0;
+  document.getElementById('result').classList.remove('show');
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function score() {
+  // Q0=small biz, Q1=51% women, Q2=highest officer + daily ops, Q3=control, Q4=PNW <$850K, Q5=AGI <$400K, Q6=SAM.gov
+  const isSmallBiz = answers[0] === 0;
+  const ownership = answers[1] === 0;
+  const dailyOps = answers[2] === 0;
+  const control = answers[3] === 0;
+  const pnwOk = answers[4] === 0;
+  const agiOk = answers[5] === 0;
+  const samOk = answers[6] === 0;
+
+  const wosbOk = isSmallBiz && ownership && dailyOps && control;
+  const edwosbOk = wosbOk && pnwOk && agiOk;
+
+  let title, summary, detail, ctaTitle, ctaBody;
+
+  if (edwosbOk && samOk) {
+    title = "✅ You likely qualify for both WOSB AND EDWOSB.";
+    summary = "Based on your answers, you meet the core SBA criteria for both Women-Owned Small Business and Economically-Disadvantaged WOSB certification. EDWOSB unlocks more set-aside contracts than WOSB alone — pursue it.";
+    detail = "<strong>Next steps:</strong><ul><li>Gather your document checklist (Operating Agreement, IRS Form 4506-T, ownership trace, PNW worksheet)</li><li>Open <a href='https://certify.sba.gov' rel='noopener'>certify.sba.gov</a> and start the application</li><li>Expect ~90 days to certification if your documents are clean</li></ul>";
+    ctaTitle = "Get the screen-by-screen application playbook.";
+    ctaBody = "The WOSB / EDWOSB Certification Guide walks you through every screen, document, and clause SBA looks for — including the 7 most common rejection reasons and how to avoid each. By a certified WOSB/EDWOSB owner. $14.99.";
+  } else if (edwosbOk && !samOk) {
+    title = "✅ You likely qualify for WOSB and EDWOSB — but you need SAM.gov first.";
+    summary = "You meet the core SBA criteria, but SAM.gov registration with a UEI is a prerequisite. Get that done before applying.";
+    detail = "<strong>Next steps:</strong><ol><li>Register at <a href='https://sam.gov' rel='noopener'>sam.gov</a> (free, ~30–60 days for full validation)</li><li>Once you have a UEI, return to certify.sba.gov</li><li>Apply for both WOSB and EDWOSB</li></ol>";
+    ctaTitle = "Get the full Government Contracting Starter Kit.";
+    ctaBody = "Includes SAM.gov walkthrough + WOSB/EDWOSB application playbook + capability statement template + NAICS guide. $19.99.";
+  } else if (wosbOk) {
+    title = "✅ You likely qualify for WOSB. EDWOSB needs a closer look.";
+    summary = "You meet the core ownership, control, and daily-operations criteria for WOSB. EDWOSB has additional Personal Net Worth and AGI limits that may or may not apply to you — review carefully.";
+    detail = "<strong>What to check:</strong><ul><li>Personal Net Worth must be under $850K (excluding primary home, primary business equity, qualified retirement accounts)</li><li>3-year average adjusted gross income must be under $400K</li><li>If you're close on either, the workbook walks through the math precisely</li></ul>";
+    ctaTitle = "Get the certification playbook.";
+    ctaBody = "The WOSB / EDWOSB Certification Guide walks through both pathways with the SBA-required PNW worksheet. $14.99.";
+  } else if (isSmallBiz && ownership) {
+    title = "⚠️ You're partially eligible. The control or daily-ops requirement may need work.";
+    summary = "You meet the size and ownership requirements, but SBA also requires that the woman owner(s) hold the highest officer position AND manage daily operations AND have unconditional control of long-term and day-to-day decisions.";
+    detail = "<strong>Common fixes:</strong><ul><li>Update Operating Agreement to remove any conditioned voting rights</li><li>Make sure woman owner is named as highest officer (CEO, President, Managing Member)</li><li>Document that the woman owner manages daily operations — not delegated to a male partner</li></ul>";
+    ctaTitle = "Fix the gaps before you apply.";
+    ctaBody = "The WOSB Certification Guide includes sample Operating Agreement language SBA looks for, plus the 7 most common rejection reasons and the exact fix for each. $14.99.";
+  } else if (!isSmallBiz) {
+    title = "⚠️ You may exceed SBA size standards.";
+    summary = "WOSB requires you to be a small business under SBA size standards for your primary NAICS code. The standards vary by industry — some allow up to $45M, others $8M.";
+    detail = "<strong>Next step:</strong> Check your size status at <a href='https://www.sba.gov/document/support--table-size-standards' rel='noopener'>sba.gov size standards</a>. Most consulting and service businesses qualify.";
+    ctaTitle = "Confirm your eligibility before investing time.";
+    ctaBody = "The Government Contracting Starter Kit includes the NAICS selection guide and size-standard reference. $19.99.";
+  } else {
+    title = "❌ You don't appear eligible for WOSB right now.";
+    summary = "Based on your answers, your business does not meet the 51%+ women-owned + control requirement. WOSB is strict on this. There may be path forward through restructuring, or alternative set-aside programs may fit better.";
+    detail = "<strong>Alternatives to consider:</strong><ul><li>8(a) Business Development (socially &amp; economically disadvantaged)</li><li>HUBZone (located in historically underutilized business zone)</li><li>SDVOSB (service-disabled veteran-owned)</li><li>State and local set-asides (Texas HUB, City of Austin DBE/WBE, etc.)</li></ul>";
+    ctaTitle = "Explore other set-aside programs.";
+    ctaBody = "The Government Contracting Starter Kit decodes all major set-aside programs (WOSB, EDWOSB, 8(a), HUBZone, SDVOSB) plus state/local options. $19.99.";
+  }
+
+  document.getElementById('result-title').textContent = title;
+  document.getElementById('result-summary').textContent = summary;
+  document.getElementById('result-detail').innerHTML = detail;
+  document.getElementById('cta-title').textContent = ctaTitle;
+  document.getElementById('cta-body').textContent = ctaBody;
+}
+
+render();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://awesomeapril143.github.io/asbc-shop/sitemap.xml

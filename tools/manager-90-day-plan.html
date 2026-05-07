@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free New Manager 90-Day Plan Builder — Build Your First 90 Days | April Lewis</title>
+<meta name="description" content="Free 90-day plan builder for first-time managers. 5-minute interactive tool generates a personalized 30/60/90-day plan with conversations to have, questions to ask, and milestones to hit.">
+<meta name="keywords" content="90 day plan, new manager 90 day plan, first time manager, 30 60 90 day plan, manager onboarding, leadership tool">
+<link rel="canonical" href="https://awesomeapril143.github.io/asbc-shop/tools/manager-90-day-plan.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Free New Manager 90-Day Plan Builder">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"New Manager 90-Day Plan Builder","applicationCategory":"BusinessApplication","operatingSystem":"Any","description":"Free interactive 30/60/90-day plan builder for first-time managers.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header"><div class="site-header-inner"><div class="brand"><a href="../index.html">A.S. Business Consulting Shop<small>Workbooks &amp; tools by April Lewis</small></a></div><nav class="nav"><a href="../index.html#products">Workbooks</a><a href="../tools/">Free Tools</a><a href="../blog/">Blog</a></nav></div></header>
+
+<main class="container narrow">
+  <p style="color:var(--magenta);font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Free Tool · 5 minutes · No signup</p>
+  <h2 style="font-size:36px">New Manager 90-Day Plan Builder</h2>
+  <p style="font-size:18px;color:var(--gray);margin-bottom:32px">Tell us about your situation. We'll generate a personalized 30/60/90-day plan with the conversations to have, the questions to ask, and the milestones to hit.</p>
+
+  <div class="tool-progress"><div class="tool-progress-bar" id="progress" style="width:0%"></div></div>
+  <div id="quiz"></div>
+
+  <div class="tool-result" id="result">
+    <h3 id="result-title">Your personalized 90-day plan</h3>
+    <div id="plan"></div>
+    <div class="cta-box" style="margin-top:24px">
+      <h3>Get the full New Manager Survival Guide.</h3>
+      <p>This plan is the starting point. The full workbook gives you fillable 1-on-1 templates, scripts for every difficult conversation, communication templates, and the self-assessment checklists you'll use every week. $14.99.</p>
+      <a class="product-cta" href="../products/new-manager-survival-guide.html">Get the Workbook &rarr;</a>
+    </div>
+    <div style="margin-top:18px"><button class="btn btn-secondary" onclick="restart()">Restart</button></div>
+  </div>
+</main>
+
+<footer class="site-footer"><div class="site-footer-inner"><div><h5>Contact</h5><a href="mailto:april@choosesuccessnow.com">april@choosesuccessnow.com</a><a href="tel:5125894053">512-589-4053</a></div><div class="copyright">&copy; 2026 A.S. Business Consulting LLC</div></div></footer>
+
+<script>
+const questions = [
+  { key: 'situation', q: "Which best describes your new role?", opts: [
+    "Promoted from within — managing former peers",
+    "Promoted from within — managing a different team",
+    "Hired in from outside — managing an existing team",
+    "Building a new team from scratch"
+  ]},
+  { key: 'size', q: "How many direct reports?", opts: ["1–3", "4–7", "8–12", "13+"]},
+  { key: 'health', q: "What's the current state of the team?", opts: [
+    "Healthy — high performers, want to keep it that way",
+    "Mixed — some strong, some struggling",
+    "Underperforming — morale is low, results are lagging",
+    "Crisis — the previous manager left a mess"
+  ]},
+  { key: 'biggest', q: "What's your single biggest concern right now?", opts: [
+    "Establishing authority without alienating people",
+    "Setting strategy / direction",
+    "Underperformers I need to address",
+    "Knowing what success looks like in this role"
+  ]}
+];
+let answers = {};
+let idx = 0;
+
+function render() {
+  const quiz = document.getElementById('quiz');
+  const progress = document.getElementById('progress');
+  if (idx >= questions.length) {
+    document.getElementById('result').classList.add('show');
+    quiz.innerHTML = '';
+    progress.style.width = '100%';
+    buildPlan();
+    window.scrollTo({ top: document.getElementById('result').offsetTop - 80, behavior: 'smooth' });
+    return;
+  }
+  progress.style.width = ((idx / questions.length) * 100) + '%';
+  const q = questions[idx];
+  quiz.innerHTML = `
+    <div class="tool-card">
+      <p style="color:var(--magenta);font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Question ${idx + 1} of ${questions.length}</p>
+      <p class="tool-question">${q.q}</p>
+      <div class="tool-options">${q.opts.map((o, i) => `<button class="tool-option" onclick="answer('${q.key}', ${i}, \`${o.replace(/`/g, '\\`')}\`)">${o}</button>`).join('')}</div>
+    </div>`;
+}
+
+function answer(key, i, label) {
+  answers[key] = { idx: i, label: label };
+  idx++;
+  render();
+}
+
+function restart() {
+  answers = {}; idx = 0;
+  document.getElementById('result').classList.remove('show');
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function buildPlan() {
+  const peerSituation = answers.situation.idx === 0;
+  const crisis = answers.health.idx === 3;
+  const underperforming = answers.health.idx === 2;
+  const concernAuthority = answers.biggest.idx === 0;
+  const concernUnderperformers = answers.biggest.idx === 2;
+
+  let p = '';
+
+  // Days 1–30
+  p += '<h3 style="color:var(--purple);margin-top:8px">Days 1–30: LISTEN</h3><ul>';
+  p += '<li><strong>1-on-1 with each direct report (45 min each).</strong> Three questions, every meeting: <em>What\'s working that I shouldn\'t change? What\'s broken that nobody is naming? What do you need from me that you didn\'t get from the last manager?</em></li>';
+  if (peerSituation) {
+    p += '<li><strong>The "former peer" reset conversation.</strong> Use the script: <em>"I want to keep our friendship. I also want to do this job well. Our work relationship has to look different — and I need your help making it work."</em> Have this with every former peer in week 1.</li>';
+  }
+  p += '<li><strong>1-on-1 with your boss (60 min).</strong> Ask: <em>What does success look like at 30, 60, 90 days? What does failure look like? What is broken that you need me to fix?</em></li>';
+  if (crisis || underperforming) {
+    p += '<li><strong>Stabilize, don\'t fix yet.</strong> Crisis-mode teams need certainty more than change. Communicate: "First 30 days I\'m listening. Then we\'ll talk about what changes."</li>';
+  }
+  p += '<li><strong>Document everything.</strong> Patterns, names, blockers, who-does-what. This becomes month 2 strategy.</li>';
+  p += '</ul>';
+
+  // Days 31–60
+  p += '<h3 style="color:var(--purple);margin-top:24px">Days 31–60: SET EXPECTATIONS</h3><ul>';
+  p += '<li><strong>Establish 1-on-1 cadence.</strong> Weekly or bi-weekly, 30 min, agenda template. Use the same opening 3 questions every meeting.</li>';
+  p += '<li><strong>Set written expectations for each role.</strong> What does great look like? What does "meeting expectations" look like? Put it on paper, share it.</li>';
+  if (concernUnderperformers || underperforming) {
+    p += '<li><strong>Have the first hard conversation with any underperformer.</strong> Script: <em>"I noticed [behavior]. What was going on?"</em> Then: <em>"Here\'s what I need to see by [date]. What do you need from me?"</em> Document the conversation.</li>';
+  }
+  p += '<li><strong>Give early positive feedback.</strong> Catch people doing things right in their first 30 days under you. Builds trust before any harder conversations.</li>';
+  if (concernAuthority || peerSituation) {
+    p += '<li><strong>Make a small visible decision.</strong> Something low-stakes but visibly your decision. Authority is built by small consistent actions, not announcements.</li>';
+  }
+  p += '<li><strong>Mid-month check-in with your boss.</strong> Surface what you\'re seeing. Get aligned on what you should be solving.</li>';
+  p += '</ul>';
+
+  // Days 61–90
+  p += '<h3 style="color:var(--purple);margin-top:24px">Days 61–90: EXECUTE</h3><ul>';
+  p += '<li><strong>Pick 1–2 strategic priorities — no more.</strong> Based on what you learned in days 1–60. Write them down. Share them with the team. Tie everyone\'s work to one of them.</li>';
+  p += '<li><strong>Address any unaddressed underperformer with a written plan.</strong> Specific behaviors, specific dates, specific consequences. Document.</li>';
+  p += '<li><strong>Run a team retro.</strong> What\'s working under your leadership? What needs to change? Receive feedback well — say "thank you for telling me," not "let me explain."</li>';
+  p += '<li><strong>Quarterly planning session.</strong> Set the next 90 days based on what you now know.</li>';
+  p += '<li><strong>90-day check-in with your boss.</strong> Self-assess against the criteria they gave you on day 1. Ask for direct feedback.</li>';
+  p += '</ul>';
+
+  // Top 3 personalized risks
+  p += '<h3 style="color:var(--magenta);margin-top:24px">⚠️ Top 3 risks for your specific situation</h3><ol>';
+  if (peerSituation) {
+    p += '<li><strong>Friendship-vs-authority blur.</strong> If you don\'t reset the relationship in week 1, you\'ll drift toward "manager who can\'t hold anyone accountable." Fix: have the reset conversation.</li>';
+  }
+  if (crisis) {
+    p += '<li><strong>Pressure to fix everything fast.</strong> Crisis teams need stability before change. Resist the urge to start firing or restructuring in month 1. Listen first.</li>';
+  }
+  if (underperforming || crisis) {
+    p += '<li><strong>Avoiding the underperformer conversation.</strong> Most new managers wait too long on this. Every month you wait, the rest of the team loses trust in your judgment. Have the conversation by day 60.</li>';
+  } else {
+    p += '<li><strong>Premature strategy.</strong> The biggest mistake new managers make is rolling out vision in month 1 before they understand the team. Listen first.</li>';
+  }
+  if (concernAuthority) {
+    p += '<li><strong>Over-correcting on authority.</strong> Authority is earned, not claimed. Loud authority is volume, not respect. Build it through small consistent decisions.</li>';
+  }
+  p += '<li><strong>Skipping the 1-on-1 with your boss.</strong> Most new managers skip alignment calls and then are surprised when their priorities don\'t match what they\'re measured on. Don\'t skip.</li>';
+  p += '</ol>';
+
+  document.getElementById('plan').innerHTML = p;
+}
+
+render();
+</script>
+
+</body>
+</html>
