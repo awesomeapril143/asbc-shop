@@ -125,37 +125,37 @@ function score() {
     summary = "Based on your answers, you meet the core SBA criteria for both Women-Owned Small Business and Economically-Disadvantaged WOSB certification. EDWOSB unlocks more set-aside contracts than WOSB alone — pursue it.";
     detail = "<strong>Next steps:</strong><ul><li>Gather your document checklist (Operating Agreement, IRS Form 4506-T, ownership trace, PNW worksheet)</li><li>Open <a href='https://certify.sba.gov' rel='noopener'>certify.sba.gov</a> and start the application</li><li>Expect ~90 days to certification if your documents are clean</li></ul>";
     ctaTitle = "Get the screen-by-screen application playbook.";
-    ctaBody = "The WOSB / EDWOSB Certification Guide walks you through every screen, document, and clause SBA looks for — including the 7 most common rejection reasons and how to avoid each. By a certified WOSB/EDWOSB owner. $14.99.";
+    ctaBody = "The WOSB / EDWOSB Certification Guide walks you through every screen, document, and clause SBA looks for — including the 7 most common rejection reasons and how to avoid each. By a certified WOSB/EDWOSB owner. $59.";
   } else if (edwosbOk && !samOk) {
     title = "✅ You likely qualify for WOSB and EDWOSB — but you need SAM.gov first.";
     summary = "You meet the core SBA criteria, but SAM.gov registration with a UEI is a prerequisite. Get that done before applying.";
     detail = "<strong>Next steps:</strong><ol><li>Register at <a href='https://sam.gov' rel='noopener'>sam.gov</a> (free, ~30–60 days for full validation)</li><li>Once you have a UEI, return to certify.sba.gov</li><li>Apply for both WOSB and EDWOSB</li></ol>";
     ctaTitle = "Get the full Government Contracting Starter Kit.";
-    ctaBody = "Includes SAM.gov walkthrough + WOSB/EDWOSB application playbook + capability statement template + NAICS guide. $19.99.";
+    ctaBody = "Includes SAM.gov walkthrough + WOSB/EDWOSB application playbook + capability statement template + NAICS guide. $59.";
   } else if (wosbOk) {
     title = "✅ You likely qualify for WOSB. EDWOSB needs a closer look.";
     summary = "You meet the core ownership, control, and daily-operations criteria for WOSB. EDWOSB has additional Personal Net Worth and AGI limits that may or may not apply to you — review carefully.";
     detail = "<strong>What to check:</strong><ul><li>Personal Net Worth must be under $850K (excluding primary home, primary business equity, qualified retirement accounts)</li><li>3-year average adjusted gross income must be under $400K</li><li>If you're close on either, the workbook walks through the math precisely</li></ul>";
     ctaTitle = "Get the certification playbook.";
-    ctaBody = "The WOSB / EDWOSB Certification Guide walks through both pathways with the SBA-required PNW worksheet. $14.99.";
+    ctaBody = "The WOSB / EDWOSB Certification Guide walks through both pathways with the SBA-required PNW worksheet. $59.";
   } else if (isSmallBiz && ownership) {
     title = "⚠️ You're partially eligible. The control or daily-ops requirement may need work.";
     summary = "You meet the size and ownership requirements, but SBA also requires that the woman owner(s) hold the highest officer position AND manage daily operations AND have unconditional control of long-term and day-to-day decisions.";
     detail = "<strong>Common fixes:</strong><ul><li>Update Operating Agreement to remove any conditioned voting rights</li><li>Make sure woman owner is named as highest officer (CEO, President, Managing Member)</li><li>Document that the woman owner manages daily operations — not delegated to a male partner</li></ul>";
     ctaTitle = "Fix the gaps before you apply.";
-    ctaBody = "The WOSB Certification Guide includes sample Operating Agreement language SBA looks for, plus the 7 most common rejection reasons and the exact fix for each. $14.99.";
+    ctaBody = "The WOSB Certification Guide includes sample Operating Agreement language SBA looks for, plus the 7 most common rejection reasons and the exact fix for each. $59.";
   } else if (!isSmallBiz) {
     title = "⚠️ You may exceed SBA size standards.";
     summary = "WOSB requires you to be a small business under SBA size standards for your primary NAICS code. The standards vary by industry — some allow up to $45M, others $8M.";
     detail = "<strong>Next step:</strong> Check your size status at <a href='https://www.sba.gov/document/support--table-size-standards' rel='noopener'>sba.gov size standards</a>. Most consulting and service businesses qualify.";
     ctaTitle = "Confirm your eligibility before investing time.";
-    ctaBody = "The Government Contracting Starter Kit includes the NAICS selection guide and size-standard reference. $19.99.";
+    ctaBody = "The Government Contracting Starter Kit includes the NAICS selection guide and size-standard reference. $59.";
   } else {
     title = "❌ You don't appear eligible for WOSB right now.";
     summary = "Based on your answers, your business does not meet the 51%+ women-owned + control requirement. WOSB is strict on this. There may be path forward through restructuring, or alternative set-aside programs may fit better.";
     detail = "<strong>Alternatives to consider:</strong><ul><li>8(a) Business Development (socially &amp; economically disadvantaged)</li><li>HUBZone (located in historically underutilized business zone)</li><li>SDVOSB (service-disabled veteran-owned)</li><li>State and local set-asides (Texas HUB, City of Austin DBE/WBE, etc.)</li></ul>";
     ctaTitle = "Explore other set-aside programs.";
-    ctaBody = "The Government Contracting Starter Kit decodes all major set-aside programs (WOSB, EDWOSB, 8(a), HUBZone, SDVOSB) plus state/local options. $19.99.";
+    ctaBody = "The Government Contracting Starter Kit decodes all major set-aside programs (WOSB, EDWOSB, 8(a), HUBZone, SDVOSB) plus state/local options. $59.";
   }
 
   document.getElementById('result-title').textContent = title;
